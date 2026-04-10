@@ -1,0 +1,553 @@
+.network-topology-page {
+  min-height: 100vh;
+  padding: 28px;
+  background: linear-gradient(180deg, #0d1329 0%, #0a1020 100%);
+  color: #e8edff;
+}
+
+.network-topology-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.network-topology-title-group {
+  display: grid;
+  gap: 8px;
+}
+
+.network-topology-back-btn,
+.network-topology-tab-btn,
+.network-topology-primary-btn,
+.network-topology-secondary-btn,
+.network-topology-edit-btn {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.network-topology-back-btn {
+  width: fit-content;
+  padding: 8px 12px;
+  border-color: #3a4673;
+  background: #162245;
+  color: #f2f6ff;
+}
+
+.network-topology-back-btn:hover {
+  border-color: #4f7cff;
+  background: #1d2e5f;
+}
+
+.network-topology-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+}
+
+.network-topology-subtitle {
+  margin: 0;
+  color: #b8c1e2;
+}
+
+.network-topology-header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.network-topology-tab-btn {
+  padding: 10px 12px;
+  border-color: #3a4673;
+  background: #172447;
+  color: #dce5ff;
+}
+
+.network-topology-tab-btn:hover {
+  border-color: #4f7cff;
+}
+
+.network-topology-tab-btn.active {
+  border-color: #4f7cff;
+  background: rgba(79, 124, 255, 0.2);
+}
+
+.network-topology-alert {
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-weight: 600;
+}
+
+.network-topology-alert-error {
+  color: #ffd8dd;
+  background: rgba(255, 95, 121, 0.14);
+  border-color: rgba(255, 95, 121, 0.42);
+}
+
+.network-topology-alert-success {
+  color: #d5ffe9;
+  background: rgba(34, 201, 134, 0.14);
+  border-color: rgba(34, 201, 134, 0.42);
+}
+
+.network-topology-card {
+  margin-top: 14px;
+  border: 1px solid #2b3558;
+  border-radius: 14px;
+  background: #131b34;
+  padding: 16px;
+}
+
+.network-topology-card h2 {
+  margin: 0 0 14px;
+  font-size: 1.05rem;
+}
+
+.network-topology-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.network-topology-form-group {
+  display: grid;
+  gap: 6px;
+}
+
+.network-topology-form-group label {
+  font-size: 0.88rem;
+  color: #b8c1e2;
+  font-weight: 700;
+}
+
+.network-topology-form-group select {
+  width: 100%;
+  border: 1px solid #2b3558;
+  background: #10172c;
+  color: #e8edff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.network-topology-form-group select:focus {
+  outline: none;
+  border-color: #4f7cff;
+  box-shadow: 0 0 0 3px rgba(79, 124, 255, 0.2);
+}
+
+.network-topology-form-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.network-topology-primary-btn {
+  padding: 10px 14px;
+  background: #4f7cff;
+  color: #fff;
+}
+
+.network-topology-primary-btn:hover {
+  background: #6890ff;
+}
+
+.network-topology-secondary-btn,
+.network-topology-edit-btn {
+  padding: 10px 14px;
+  border-color: #3a4673;
+  background: #1b2a54;
+  color: #e8edff;
+}
+
+.network-topology-secondary-btn:hover,
+.network-topology-edit-btn:hover {
+  border-color: #4f7cff;
+}
+
+.network-topology-empty {
+  margin: 0;
+  color: #b8c1e2;
+}
+
+.network-topology-table-wrap {
+  border: 1px solid #2b3558;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.network-topology-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.network-topology-table th {
+  text-align: left;
+  background: #1a2648;
+  color: #d7def9;
+  font-size: 0.86rem;
+  padding: 11px 10px;
+}
+
+.network-topology-table td {
+  padding: 10px;
+  color: #c8d1f2;
+  border-top: 1px solid rgba(53, 65, 106, 0.5);
+}
+
+.network-topology-table tbody tr:hover {
+  background: rgba(79, 124, 255, 0.08);
+}
+
+.network-topology-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(79, 124, 255, 0.35);
+  background: rgba(79, 124, 255, 0.18);
+  color: #dbe3ff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.network-topology-badge-btn {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.network-topology-badge-btn:hover,
+.network-topology-badge-btn.active {
+  border-color: #7ea0ff;
+  background: rgba(79, 124, 255, 0.35);
+}
+
+.network-topology-visual-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.network-topology-visual-wrap.adjacent {
+  flex-direction: row;
+}
+
+.network-topology-visual-wrap.downstream,
+.network-topology-visual-wrap.upstream {
+  flex-direction: column;
+}
+
+.network-topology-visual-wrap.downstream .network-topology-connector,
+.network-topology-visual-wrap.upstream .network-topology-connector {
+  align-self: center;
+}
+
+.network-topology-node-card {
+  border: 1px solid #2b3558;
+  background: #10172c;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.network-topology-node-source {
+  order: 1;
+}
+
+.network-topology-node-target {
+  order: 3;
+}
+
+.network-topology-node-image {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #182443;
+  border: 1px solid #33426f;
+  padding: 8px;
+}
+
+.network-topology-node-tag {
+  display: inline-block;
+  margin-bottom: 4px;
+  border: 1px solid rgba(79, 124, 255, 0.35);
+  background: rgba(79, 124, 255, 0.2);
+  color: #dbe3ff;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+
+.network-topology-node-info h4 {
+  margin: 0;
+  color: #f2f6ff;
+  font-size: 0.95rem;
+}
+
+.network-topology-node-info p {
+  margin: 4px 0 0;
+  color: #b8c1e2;
+  font-size: 0.84rem;
+}
+
+.network-topology-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 100px;
+}
+
+.network-topology-connector-arrow {
+  font-size: 1.8rem;
+  color: #8ca9ff;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.network-topology-connector-label {
+  border: 1px solid rgba(79, 124, 255, 0.35);
+  background: rgba(79, 124, 255, 0.2);
+  color: #dbe3ff;
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.network-topology-visual-wrap.adjacent .network-topology-connector,
+.network-topology-visual-wrap.downstream .network-topology-connector,
+.network-topology-visual-wrap.upstream .network-topology-connector {
+  order: 2;
+  flex-direction: column;
+}
+
+.network-topology-visual-wrap.upstream .network-topology-node-source {
+  order: 3;
+}
+
+.network-topology-visual-wrap.upstream .network-topology-node-target {
+  order: 1;
+}
+
+.network-topology-asset-gallery {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.network-topology-asset-tile {
+  border: 1px solid #2b3558;
+  background: #10172c;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.network-topology-asset-tile.active {
+  border-color: #7ea0ff;
+  box-shadow: 0 0 0 2px rgba(79, 124, 255, 0.22) inset;
+}
+
+.network-topology-asset-tile-image {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #182443;
+  border: 1px solid #33426f;
+  padding: 4px;
+}
+
+.network-topology-asset-tile-text {
+  display: grid;
+  gap: 2px;
+}
+
+.network-topology-asset-tile-text strong {
+  color: #f2f6ff;
+  font-size: 0.82rem;
+}
+
+.network-topology-asset-tile-text span {
+  color: #b8c1e2;
+  font-size: 0.75rem;
+}
+
+.network-topology-tree-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.network-topology-tree-header h2 {
+  margin: 0;
+}
+
+.network-topology-tree-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.network-topology-tree-search {
+  min-width: 280px;
+  border: 1px solid #2b3558;
+  background: #10172c;
+  color: #e8edff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: 0.2s ease;
+}
+
+.network-topology-tree-search::placeholder {
+  color: #9ba7ce;
+}
+
+.network-topology-tree-search:focus {
+  outline: none;
+  border-color: #4f7cff;
+  box-shadow: 0 0 0 3px rgba(79, 124, 255, 0.2);
+}
+
+.network-topology-tree-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.network-topology-tree-list.root {
+  margin-top: 8px;
+}
+
+.network-topology-tree-node {
+  margin-left: calc(var(--node-depth, 0) * 18px);
+}
+
+.network-topology-tree-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.network-topology-tree-toggle {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid #3a4673;
+  background: #1b2a54;
+  color: #dbe3ff;
+  cursor: pointer;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.network-topology-tree-toggle:hover:not(:disabled) {
+  border-color: #7ea0ff;
+  background: #263b73;
+}
+
+.network-topology-tree-toggle.is-leaf {
+  background: #111a33;
+  border-color: #2b3558;
+  cursor: default;
+}
+
+.network-topology-tree-content {
+  border: 1px solid #2b3558;
+  background: #10172c;
+  border-radius: 10px;
+  padding: 8px 10px;
+  display: grid;
+  gap: 3px;
+  min-width: min(560px, 100%);
+}
+
+.network-topology-tree-title {
+  color: #f2f6ff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.network-topology-tree-meta {
+  color: #b8c1e2;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 1024px) {
+  .network-topology-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .network-topology-visual-wrap.adjacent {
+    flex-direction: column;
+  }
+
+  .network-topology-connector {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .network-topology-table {
+    min-width: 720px;
+  }
+
+  .network-topology-table-wrap {
+    overflow-x: auto;
+  }
+
+  .network-topology-tree-content {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .network-topology-page {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .network-topology-form {
+    grid-template-columns: 1fr;
+  }
+
+  .network-topology-form-actions {
+    width: 100%;
+  }
+
+  .network-topology-primary-btn,
+  .network-topology-secondary-btn {
+    width: 100%;
+  }
+
+  .network-topology-tree-actions {
+    width: 100%;
+  }
+
+  .network-topology-tree-search,
+  .network-topology-tree-actions .network-topology-secondary-btn {
+    width: 100%;
+    min-width: 0;
+  }
+}

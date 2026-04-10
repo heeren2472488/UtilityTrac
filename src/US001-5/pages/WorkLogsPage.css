@@ -1,0 +1,48 @@
+.worklogs-page {
+  background: var(--bg-surface);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+}
+
+.table-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--bg-elevated);
+  text-align: left;
+  padding: 12px;
+  color: var(--text-secondary);
+}
+
+td {
+  padding: 12px;
+  border-top: 1px solid var(--border-light);
+}
+
+.truncate {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-pending { background: var(--warning-dim); color: var(--warning); }
+.badge-approved { background: var(--success-dim); color: var(--success); }
+.badge-rejected { background: var(--danger-dim); color: var(--danger); }
+.badge-completed { background: var(--accent-dim); color: var(--accent); }
