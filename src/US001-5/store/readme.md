@@ -1,0 +1,1 @@
+global state management used when state needs to be shared across multiple components
