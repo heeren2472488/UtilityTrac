@@ -1,0 +1,101 @@
+/* ============================================================
+   THEME TOGGLE BUTTON — Floating, animated, top-right
+   ============================================================ */
+
+@keyframes theme-btn-spin {
+  from { transform: rotate(0deg) scale(1.15); }
+  to   { transform: rotate(360deg) scale(1.15); }
+}
+
+@keyframes theme-btn-pulse-dark {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.22), 0 6px 28px rgba(0,0,0,0.45); }
+  50%       { box-shadow: 0 0 0 8px rgba(255,255,255,0.06), 0 6px 28px rgba(0,0,0,0.45); }
+}
+
+@keyframes theme-btn-pulse-light {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.3), 0 6px 24px rgba(37,99,235,0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(37,99,235,0.06), 0 6px 24px rgba(37,99,235,0.3); }
+}
+
+.theme-toggle-fab {
+  position: fixed;
+  top: 20px;
+  right: 22px;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 18px 9px 13px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.2s ease,
+    box-shadow 0.35s ease;
+
+  will-change: transform;
+  user-select: none;
+  outline: none;
+}
+
+/* ── Dark mode style: white pill ─────────────────────────── */
+[data-theme='dark'] .theme-toggle-fab {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f1a2e;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  animation: theme-btn-pulse-dark 3s ease-in-out infinite;
+}
+
+[data-theme='dark'] .theme-toggle-fab:hover {
+  background: #ffffff;
+  transform: translateY(-2px) scale(1.04);
+  animation: none;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 0 4px rgba(255,255,255,0.18);
+}
+
+/* ── Light mode style: blue pill ─────────────────────────── */
+[data-theme='light'] .theme-toggle-fab {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: 1.5px solid rgba(37,99,235,0.4);
+  animation: theme-btn-pulse-light 3s ease-in-out infinite;
+}
+
+[data-theme='light'] .theme-toggle-fab:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-2px) scale(1.04);
+  animation: none;
+  box-shadow: 0 8px 32px rgba(37,99,235,0.4), 0 0 0 4px rgba(37,99,235,0.12);
+}
+
+/* ── Icon spin on hover ──────────────────────────────────── */
+.theme-toggle-fab:hover .theme-fab-icon {
+  animation: theme-btn-spin 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.theme-fab-icon {
+  font-size: 1.05rem;
+  display: inline-flex;
+  transition: transform 0.35s ease;
+  line-height: 1;
+}
+
+.theme-fab-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+
+/* ── Active / pressed ────────────────────────────────────── */
+.theme-toggle-fab:active {
+  transform: scale(0.96) !important;
+}

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Utilitrac icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1022"/>
+      <stop offset="45%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="bolt" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="url(#bg)"/>
+  <rect x="3" y="3" width="58" height="58" rx="15" fill="none" stroke="rgba(255,255,255,.24)"/>
+
+  <path d="M18 19v18c0 7 5 12 14 12s14-5 14-12V19" fill="none" stroke="url(#ring)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M34 18l-8 13h7l-3 14 10-16h-7l1-11z" fill="url(#bolt)" stroke="#fff" stroke-opacity=".25" stroke-width="1" stroke-linejoin="round"/>
+
+  <circle cx="49" cy="17" r="4" fill="#22d3ee"/>
+</svg>

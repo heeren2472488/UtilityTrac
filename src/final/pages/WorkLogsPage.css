@@ -1,0 +1,189 @@
+.worklogs-page {
+  background: var(--bg-surface);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+}
+
+.table-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.worklogs-toolbar {
+  margin-bottom: 12px;
+  padding: 12px;
+}
+
+.worklogs-toolbar-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.worklogs-draft-info {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+}
+
+.worklog-form-card {
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.worklog-form-title {
+  margin: 0 0 12px;
+}
+
+.worklog-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.worklog-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.worklog-field-wide {
+  grid-column: 1 / -1;
+}
+
+.worklogs-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.worklogs-input:focus {
+  outline: 2px solid var(--accent-dim);
+  border-color: var(--accent);
+}
+
+.input-error {
+  border-color: var(--danger);
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 0.82rem;
+}
+
+.alert-error,
+.alert-success {
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 10px 0;
+}
+
+.alert-error {
+  border: 1px solid var(--danger-dim);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.alert-success {
+  border: 1px solid var(--success-dim);
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: var(--bg-elevated);
+  text-align: left;
+  padding: 12px;
+  color: var(--text-secondary);
+}
+
+td {
+  padding: 12px;
+  border-top: 1px solid var(--border-light);
+}
+
+.truncate {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.badge-pending { background: var(--warning-dim); color: var(--warning); }
+.badge-approved { background: var(--success-dim); color: var(--success); }
+.badge-rejected { background: var(--danger-dim); color: var(--danger); }
+.badge-completed { background: var(--accent-dim); color: var(--accent); }
+
+/* ============================================================
+   LIGHT THEME OVERRIDES
+   ============================================================ */
+[data-theme='light'] .worklogs-page {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+[data-theme='light'] .table-card {
+  background: #ffffff !important;
+  border-color: rgba(37,99,235,0.15) !important;
+  box-shadow: 0 4px 18px rgba(37,99,235,0.07) !important;
+}
+[data-theme='light'] .worklogs-input {
+  background: #ffffff !important;
+  border-color: rgba(37,99,235,0.2) !important;
+  color: #0f172a !important;
+}
+[data-theme='light'] th { background: rgba(37,99,235,0.07) !important; color: #1e40af !important; }
+[data-theme='light'] td { color: #1e293b !important; border-color: rgba(37,99,235,0.07) !important; }
+[data-theme='light'] tr:hover td { background: rgba(37,99,235,0.04) !important; }
+[data-theme='light'] .badge { filter: brightness(0.9) saturate(1.2); }
+
+@media (max-width: 768px) {
+  .worklogs-page {
+    padding: 12px;
+  }
+
+  .worklog-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    font-size: 0.86rem;
+  }
+
+  .truncate {
+    max-width: 140px;
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    min-height: 40px;
+  }
+}

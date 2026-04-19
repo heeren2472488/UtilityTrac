@@ -1,0 +1,299 @@
+.admin-ops-page {
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid rgba(94, 230, 255, 0.14);
+  border-radius: 20px;
+  padding: 22px;
+  color: var(--text-primary, #e7f6ff);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+}
+
+.admin-ops-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.admin-ops-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+.admin-ops-subtitle {
+  margin: 6px 0 0;
+  color: var(--text-muted, rgba(199,220,246,0.74));
+  font-size: 0.92rem;
+}
+
+.admin-ops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.admin-ops-card {
+  border: 1px solid rgba(94, 230, 255, 0.14);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-ops-card-label {
+  color: var(--text-muted, rgba(199,220,246,0.74));
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-ops-card-value {
+  margin-top: 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.admin-ops-toolbar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.admin-ops-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-ops-field label {
+  font-size: 0.78rem;
+  color: var(--text-muted, rgba(199,220,246,0.74));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.admin-ops-input,
+.admin-ops-select {
+  border: 1px solid rgba(94, 230, 255, 0.16);
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: rgba(8, 13, 34, 0.55);
+  color: var(--text-primary, #e7f6ff);
+}
+
+.admin-ops-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-ops-btn {
+  border: 1px solid rgba(94, 230, 255, 0.22);
+  background: rgba(94, 230, 255, 0.12);
+  color: #5ee6ff;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.admin-ops-btn.secondary {
+  color: #c7dcf6;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-ops-btn:hover {
+  filter: brightness(1.08);
+}
+
+.admin-ops-table-wrap {
+  border: 1px solid rgba(94, 230, 255, 0.12);
+  border-radius: 12px;
+  overflow: auto;
+}
+
+.admin-ops-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+
+.admin-ops-table th,
+.admin-ops-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(94, 230, 255, 0.08);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-ops-table th {
+  position: sticky;
+  top: 0;
+  background: rgba(14, 21, 48, 0.95);
+  color: #94dfff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+}
+
+.admin-pill.active {
+  color: #15803d;
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.admin-pill.inactive {
+  color: #64748b;
+  background: rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.38);
+}
+
+.admin-ops-pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--text-muted, rgba(199,220,246,0.74));
+}
+
+.admin-ops-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 18, 0.68);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 16px;
+}
+
+.admin-ops-modal-card {
+  width: min(760px, 95vw);
+  max-height: 90vh;
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(94, 230, 255, 0.16);
+  background: linear-gradient(180deg, #0c132f, #0f1a3a);
+  padding: 18px;
+}
+
+.admin-ops-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.admin-readonly-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid rgba(94, 230, 255, 0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+}
+
+.admin-readonly-knob {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  position: relative;
+  background: rgba(148,163,184,0.35);
+}
+
+.admin-readonly-knob::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  background: #e2e8f0;
+}
+
+.admin-readonly-knob.on {
+  background: rgba(34,197,94,0.45);
+}
+
+.admin-readonly-knob.on::after {
+  left: 23px;
+  background: #22c55e;
+}
+
+.admin-note {
+  margin-top: 10px;
+  color: var(--text-muted, rgba(199,220,246,0.74));
+  font-size: 0.82rem;
+}
+
+[data-theme='light'] .admin-ops-page {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.16);
+  color: #0f172a;
+  box-shadow: 0 14px 30px rgba(37,99,235,0.1);
+}
+
+[data-theme='light'] .admin-ops-card,
+[data-theme='light'] .admin-readonly-toggle {
+  background: #f8fbff;
+  border-color: rgba(37, 99, 235, 0.14);
+}
+
+[data-theme='light'] .admin-ops-subtitle,
+[data-theme='light'] .admin-ops-card-label,
+[data-theme='light'] .admin-note,
+[data-theme='light'] .admin-ops-pagination,
+[data-theme='light'] .admin-ops-field label {
+  color: #64748b;
+}
+
+[data-theme='light'] .admin-ops-input,
+[data-theme='light'] .admin-ops-select {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.2);
+  color: #0f172a;
+}
+
+[data-theme='light'] .admin-ops-table th {
+  background: #eef4ff;
+  color: #1d4ed8;
+}
+
+[data-theme='light'] .admin-ops-table th,
+[data-theme='light'] .admin-ops-table td,
+[data-theme='light'] .admin-ops-table-wrap {
+  border-color: rgba(37, 99, 235, 0.12);
+}
+
+[data-theme='light'] .admin-ops-btn {
+  background: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.2);
+  color: #1d4ed8;
+}
+
+[data-theme='light'] .admin-ops-btn.secondary {
+  color: #334155;
+  background: #ffffff;
+}
+
+[data-theme='light'] .admin-ops-modal-card {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.18);
+}

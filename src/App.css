@@ -13,6 +13,9 @@
   --text: #e8eaf0;
   --text2: #8b92a8;
   --sidebar-w: 240px;
+  --layout-sidebar-expanded: 260px;
+  --layout-sidebar-collapsed: 64px;
+  --layout-sidebar-offset: var(--layout-sidebar-expanded);
   --radius: 10px;
 }
 
@@ -20,9 +23,10 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--page-bg, #0d0f14);
+  color: var(--text-primary, #e8eaf0);
   min-height: 100vh;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 .app-shell {
@@ -32,11 +36,11 @@ body {
 
 .main-content {
   flex: 1;
-  margin-left: 220px;
-  background: var(--bg-base);
-  background: #06131f;
+  margin-left: var(--layout-sidebar-offset);
+  background: var(--page-bg, #06131f);
+  color: var(--text-primary, #e8eaf6);
   min-height: 100vh;
-  transition: margin-left 0.18s ease;
+  transition: margin-left 0.32s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease, color 0.35s ease;
   overflow-x: hidden;
 }
 
@@ -335,9 +339,10 @@ td {
 
 .main-content {
   flex: 1;
-  margin-left: var(--sidebar-w);
+  margin-left: var(--layout-sidebar-offset);
   padding: 32px;
   min-height: 100vh;
+  transition: margin-left 0.32s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease, color 0.35s ease;
 }
 
 .card {
@@ -486,3 +491,24 @@ select.form-control option { background: var(--bg3); }
 .icon-btn.del  { color: var(--danger); }
 
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ============================================================
+   LIGHT THEME — APP SHELL
+   ============================================================ */
+[data-theme='light'] body,
+[data-theme='light'] .app-shell { background: #eef2f7 !important; color: #0f172a !important; }
+[data-theme='light'] .main-content { background: #eef2f7 !important; color: #0f172a !important; }
+[data-theme='light'] .page-wrapper,
+[data-theme='light'] .page-content { background: #eef2f7 !important; color: #0f172a !important; }
+
+/* App.css stat/table cards (used in DashboardPage) */
+[data-theme='light'] .stat-card {
+  background: #ffffff !important;
+  border-color: rgba(37,99,235,0.15) !important;
+  box-shadow: 0 4px 18px rgba(37,99,235,0.07) !important;
+  color: #0f172a !important;
+}
+[data-theme='light'] .stat-icon { background: rgba(37,99,235,0.1) !important; color: #2563eb !important; }
+[data-theme='light'] .stat-label { color: #64748b !important; }
+[data-theme='light'] .stat-value { color: #0f172a !important; }
+[data-theme='light'] .icon-btn:hover { background: #e2e8f0 !important; }
