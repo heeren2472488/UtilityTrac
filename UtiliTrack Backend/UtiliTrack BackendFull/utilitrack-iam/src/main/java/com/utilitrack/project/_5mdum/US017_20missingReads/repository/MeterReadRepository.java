@@ -26,6 +26,8 @@ public interface MeterReadRepository extends JpaRepository<MeterRead, Long> {
             LocalDateTime from,
             LocalDateTime to
     );
+    @Query("SELECT DISTINCT m.meterId FROM MeterRead m ORDER BY m.meterId")
+    List<Long> findDistinctMeterIds();
 
     /* =====================================================
        MISSING READ LOGIC

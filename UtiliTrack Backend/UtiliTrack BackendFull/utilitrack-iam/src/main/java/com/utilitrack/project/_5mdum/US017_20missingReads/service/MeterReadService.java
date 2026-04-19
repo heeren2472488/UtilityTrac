@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -79,6 +80,10 @@ public class MeterReadService {
                 .stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
+    }
+    @Transactional(readOnly = true)
+    public List<Long> getAllMeters() {
+        return meterReadRepository.findDistinctMeterIds();
     }
 
     public void deleteById(Long id) {
@@ -272,5 +277,45 @@ public class MeterReadService {
         response.setReadSource(meterRead.getReadSource());
         response.setCreatedAt(meterRead.getCreatedAt());
         return response;
+    }
+
+    public List<MeterRead> detectAndCreateMissingReads() {
+
+        List<MeterRead> allReads = meterReadRepository.findAll();
+
+        Map<Long, List<MeterRead>> grouped =
+                allReads.stream()
+                        .filter(r -> r.getReadingDateTime() != null)
+                        .collect(Collectors.groupingBy(MeterRead::getMeterId));
+
+        List<MeterRead> created = new ArrayList<>();
+
+        for (List<MeterRead> reads : grouped.values()) {
+            reads.sort(Comparator.comparing(MeterRead::getReadingDateTime));
+
+            for (int i = 0; i < reads.size() - 1; i++) {
+
+                LocalDate current = reads.get(i).getReadingDateTime().toLocalDate();
+                LocalDate next = reads.get(i + 1).getReadingDateTime().toLocalDate();
+
+                long gap = ChronoUnit.DAYS.between(current, next);
+
+                if (gap > 1) {
+                    LocalDate d = current.plusDays(1);
+                    while (d.isBefore(next)) {
+                        MeterRead m = new MeterRead();
+                        m.setMeterId(reads.get(i).getMeterId());
+                        m.setReadingDateTime(d.atStartOfDay());
+                        m.setMissing(true);
+                        m.setGapFilled(false);
+                        m.setReadType(MeterRead.ReadType.ESTIMATED);
+                        m.setReadSource(ReadSource.BATCH);
+                        created.add(meterReadRepository.save(m));
+                        d = d.plusDays(1);
+                    }
+                }
+            }
+        }
+        return created;
     }
 }

@@ -5,6 +5,7 @@ import com.utilitrack.project._2arnt.US006_7_Topology.model.TopologyLink;
 import com.utilitrack.project._2arnt.US006_7_Topology.service.OutageAssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class OutageAssetController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'OPERATIONS PLANNER', 'PLANNER')")
     public ResponseEntity<List<OutageAsset>> getAllAssets() {
         return ResponseEntity.ok(outageAssetService.getAllAssets());
     }

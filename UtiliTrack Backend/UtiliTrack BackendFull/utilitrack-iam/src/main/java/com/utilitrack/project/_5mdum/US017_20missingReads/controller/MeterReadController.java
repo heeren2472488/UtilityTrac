@@ -35,6 +35,15 @@ public class MeterReadController {
     /* =====================================================
        SECTION 1: MANUAL METER READS
        ===================================================== */
+    @GetMapping("/meters")
+    public ResponseEntity<ApiResponse<List<Long>>> getAllMeters() {
+        return ResponseEntity.ok(
+                ApiResponse.ok(
+                        meterReadService.getAllMeters(),
+                        "All meters retrieved"
+                )
+        );
+    }
 
     @PostMapping("/manual")
     public ResponseEntity<ApiResponse<MeterReadResponse>> createMeterRead(
@@ -125,10 +134,18 @@ public class MeterReadController {
 
     @GetMapping("/missing")
     public ResponseEntity<ApiResponse<List<MeterRead>>> getMissingReads() {
+
+        // ✅ STEP 1: Detect and create missing gap records
+        meterReadService.detectAndCreateMissingReads();
+
+        // ✅ STEP 2: Fetch missing reads from DB
+        List<MeterRead> missingReads = meterReadService.identifyMissingReads();
+
         return ResponseEntity.ok(
                 ApiResponse.ok(
-                        meterReadService.identifyMissingReads(),
-                        "Missing reads identified")
+                        missingReads,
+                        "Missing reads identified"
+                )
         );
     }
 

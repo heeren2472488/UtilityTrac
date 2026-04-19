@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -60,8 +61,24 @@ public class LoginService {
                     Duration.between(LocalDateTime.now(), user.getLockedUntil())
                             .toMinutes() + 1;
 
+            log.warn("Locked account login attempt: {} ({}m remaining)", 
+                    user.getEmail(), minutesLeft);
+
             throw new LockedException(
                     "Account locked. Try again in " + minutesLeft + " minute(s).");
+        }
+
+        // ✅ Also check if loginAttempts exceed max (extra safety)
+        if (user.getLoginAttempts() >= maxAttempts) {
+            log.warn("Account exceeded max attempts: {} ({})", 
+                    user.getEmail(), user.getLoginAttempts());
+            
+            user.setLockedUntil(LocalDateTime.now().plusMinutes(lockoutMinutes));
+            userRepository.save(user);
+            
+            throw new LockedException(
+                    "Account locked due to too many failed attempts. Try again in " 
+                    + lockoutMinutes + " minute(s).");
         }
 
         // ✅ Validate password
@@ -83,7 +100,12 @@ public class LoginService {
         user.setLockedUntil(null);
         userRepository.save(user);
 
-        String token = jwtUtil.generateToken(user.getEmail());
+        List<String> roleNames = user.getRoles()
+                .stream()
+                .map(Role::getName)
+                .toList();
+
+        String token = jwtUtil.generateToken(user.getEmail(), roleNames);
 
         auditService.log(
                 user.getId(),
@@ -121,7 +143,7 @@ public class LoginService {
             );
 
             log.warn(
-                    "Account locked: {} after {} failed attempts",
+                    "🔒 Account locked: {} after {} failed attempts",
                     user.getEmail(),
                     attempts
             );

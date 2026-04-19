@@ -27,7 +27,7 @@ public class MaintenanceProfileController {
 
     private final IMaintenanceProfileService profileService;
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'PLANNER', 'TECHNICIAN')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','PLANNER','ADMIN')")
     public ResponseEntity<List<MaintenanceProfileDTO>> getAllProfiles() {
         log.debug("Fetching all maintenance profiles");
         List<MaintenanceProfileDTO> profiles = profileService.getAllProfiles();

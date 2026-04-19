@@ -5,6 +5,7 @@ import com.utilitrack.project._1iam.US003_password_reset.dto.ForgotPasswordReque
 import com.utilitrack.project._1iam.US003_password_reset.dto.ResetPasswordRequest;
 import com.utilitrack.project._1iam.US003_password_reset.service.PasswordResetService;
 import com.utilitrack.project.common.ApiResponse;
+import com.utilitrack.project.common.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,13 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * US003: Password Reset Controller
- *
- * ✅ POST /api/iam/forgot-password  (public)
- * ✅ POST /api/iam/reset-password   (public)
- * ✅ POST /api/iam/change-password  (authenticated)
- */
 @RestController
 @RequestMapping("/api/iam")
 @RequiredArgsConstructor
@@ -27,37 +21,38 @@ public class PasswordResetController {
 
     private final PasswordResetService passwordResetService;
 
-    /**
-     * DEV‑ONLY option to expose reset token in response header
-     * ⚠️ MUST be false in production
-     */
     @Value("${app.expose-reset-token-in-response:false}")
     private boolean exposeResetTokenInResponse;
 
     /* =====================================================
-       FORGOT PASSWORD (SEND RESET LINK)
+       FORGOT PASSWORD
        ===================================================== */
     @PostMapping("/forgot-password")
     public ResponseEntity<ApiResponse<String>> forgotPassword(
             @Valid @RequestBody ForgotPasswordRequest req) {
 
-        // Service returns token if email exists, otherwise null
-        String tokenOrNull = passwordResetService.requestReset(req);
+        try {
+            String token = passwordResetService.requestReset(req);
 
-        String message = "If that email is registered, a reset link has been sent.";
+            ResponseEntity.BodyBuilder response = ResponseEntity.ok();
 
-        ResponseEntity.BodyBuilder response = ResponseEntity.ok();
+            if (exposeResetTokenInResponse) {
+                response.header("X-Dev-Reset-Token", token);
+            }
 
-        // ✅ DEV ONLY: attach token in response header
-        if (exposeResetTokenInResponse && tokenOrNull != null) {
-            response.header("X-Dev-Reset-Token", tokenOrNull);
+            return response.body(
+                    ApiResponse.ok("Password reset link sent successfully.")
+            );
+
+        } catch (ResourceNotFoundException ex) {
+            return ResponseEntity.badRequest().body(
+                    ApiResponse.error(ex.getMessage())
+            );
         }
-
-        return response.body(ApiResponse.ok(message));
     }
 
     /* =====================================================
-       RESET PASSWORD USING TOKEN
+       RESET PASSWORD
        ===================================================== */
     @PostMapping("/reset-password")
     public ResponseEntity<ApiResponse<String>> resetPassword(
@@ -71,7 +66,7 @@ public class PasswordResetController {
     }
 
     /* =====================================================
-       CHANGE PASSWORD (AUTHENTICATED USER)
+       CHANGE PASSWORD
        ===================================================== */
     @PostMapping("/change-password")
     public ResponseEntity<ApiResponse<String>> changePassword(

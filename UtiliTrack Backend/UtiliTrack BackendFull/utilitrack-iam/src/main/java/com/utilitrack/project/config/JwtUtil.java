@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 @Component
@@ -17,10 +18,29 @@ public class JwtUtil {
     @Value("${jwt.expiration}") private long expiration;
 
     //used to create signed Jwt token by HMAC
-    public String generateToken(String email) {
-        return Jwts.builder().subject(email).issuedAt(new Date())
+    public String generateToken(String email, List<String> roles) {
+        return Jwts.builder()
+                .subject(email)
+                .claim("roles", roles)   // ✅ ADD THIS
+                .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getKey()).compact();//HMAC key
+                .signWith(getKey())
+                .compact();
+    }
+    public List<String> extractRoles(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        Object roles = claims.get("roles");
+        if (roles instanceof List<?>) {
+            return ((List<?>) roles).stream()
+                    .map(Object::toString)
+                    .toList();
+        }
+        return List.of();
     }
 
     //to extract the data out of the token

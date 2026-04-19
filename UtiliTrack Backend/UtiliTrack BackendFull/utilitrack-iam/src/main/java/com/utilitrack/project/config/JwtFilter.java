@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * JWT filter that authenticates requests if a valid Bearer token is present.
@@ -74,13 +76,26 @@ public class JwtFilter extends OncePerRequestFilter {
             UserDetails ud = userDetailsService.loadUserByUsername(email);
             // validate that the token is for this user and not expired
             if (jwtUtil.validateToken(token, ud)) {
+                List<String> roles = jwtUtil.extractRoles(token);
+
+                var authorities = roles.stream()
+                        .map(role -> role
+                                .trim()
+                                .toUpperCase())   // ✅ CRITICAL
+                        .map(role -> "ROLE_" + role)
+                        .map(SimpleGrantedAuthority::new)
+                        .toList();
+
+
                 UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(ud, null, authorities);
+
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
         //continuing the chain
         chain.doFilter(req, res);
+
     }
 }

@@ -18,19 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
-/**
- * US003: Password Reset Service
- *
- * ✅ Forgot Password → Email token
- * ✅ Reset Password → Token validation
- * ✅ Change Password → Authenticated users
- * ✅ One‑time token + expiry
- * ✅ BCrypt hashing
- * ✅ Non‑disclosure safe
- */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -54,15 +43,10 @@ public class PasswordResetService {
     @Transactional
     public String requestReset(ForgotPasswordRequest req) {
 
-        Optional<User> maybeUser = userRepository.findByEmail(req.getEmail());
-
-        // ✅ Non‑disclosure: same behavior even if email does not exist
-        if (maybeUser.isEmpty()) {
-            log.info("Password reset requested for non-existent email: {}", req.getEmail());
-            return null;
-        }
-
-        User user = maybeUser.get();
+        User user = userRepository.findByEmail(req.getEmail())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Email not registered or invalid email address")
+                );
 
         // ✅ Invalidate previous tokens
         tokenRepository.deleteByUser_Id(user.getId());
@@ -73,6 +57,7 @@ public class PasswordResetService {
                 .user(user)
                 .token(tokenValue)
                 .expiresAt(LocalDateTime.now().plusMinutes(expiryMinutes))
+                .used(false)
                 .build();
 
         tokenRepository.save(token);
@@ -81,7 +66,7 @@ public class PasswordResetService {
                 ? frontendUrl + "reset-password?token=" + tokenValue
                 : frontendUrl + "/reset-password?token=" + tokenValue;
 
-        // ✅ Send email (link only, never password)
+        // ✅ Send email only to registered users
         emailService.sendResetEmail(user.getEmail(), user.getName(), resetLink);
 
         auditService.log(
@@ -91,7 +76,7 @@ public class PasswordResetService {
                 "User#" + user.getEmail()
         );
 
-        log.info("Password reset token generated for {}", user.getEmail());
+        log.info("Password reset email sent to {}", user.getEmail());
         return tokenValue;
     }
 
@@ -102,7 +87,9 @@ public class PasswordResetService {
     public void resetPassword(ResetPasswordRequest req) {
 
         PasswordResetToken token = tokenRepository.findByToken(req.getToken())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid or expired reset token"));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Invalid or expired reset token")
+                );
 
         if (!token.isValid()) {
             throw new IllegalArgumentException("Token expired or already used");
@@ -133,7 +120,9 @@ public class PasswordResetService {
     public void changePassword(ChangePasswordRequest req, String email) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found")
+                );
 
         if (!passwordEncoder.matches(req.getCurrentPassword(), user.getPassword())) {
             throw new BadCredentialsException("Current password is incorrect");

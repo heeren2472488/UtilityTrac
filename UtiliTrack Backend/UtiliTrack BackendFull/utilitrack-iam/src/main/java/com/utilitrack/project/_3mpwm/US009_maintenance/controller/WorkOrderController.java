@@ -43,7 +43,7 @@ public class WorkOrderController {
        ====================================================== */
 
     @PostMapping
-    @PreAuthorize("hasRole('')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','PLANNER','ADMIN')")
     public ResponseEntity<WorkOrderDTO> createWorkOrder(
             @Valid @RequestBody WorkOrderDTO dto,
             @RequestHeader(value = "X-User-ID", required = false) String userId) {
@@ -56,7 +56,7 @@ public class WorkOrderController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<WorkOrderDTO> updateWorkOrder(
             @PathVariable Long id,
             @Valid @RequestBody WorkOrderDTO dto,
@@ -68,7 +68,7 @@ public class WorkOrderController {
     }
     // ✅ GET ALL WORK ORDERS
     @GetMapping
-    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<List<WorkOrderDTO>> getAllWorkOrders() {
 
         return ResponseEntity.ok(
@@ -77,7 +77,7 @@ public class WorkOrderController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('PLANNER','TECHNICIAN','OPERATOR')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','PLANNER','TECHNICIAN','OPERATOR')")
     public ResponseEntity<WorkOrderDTO> getWorkOrder(@PathVariable Long id) {
         return maintenanceService.getWorkOrderById(id)
                 .map(ResponseEntity::ok)
@@ -85,7 +85,7 @@ public class WorkOrderController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<Void> deleteWorkOrder(@PathVariable Long id) {
         maintenanceService.deleteWorkOrder(id);
         return ResponseEntity.noContent().build();
@@ -141,7 +141,7 @@ public class WorkOrderController {
     /* ---------- Utilities ---------- */
 
     @PostMapping("/validate")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<WorkOrderValidationResult> validate(
             @Valid @RequestBody WorkOrderDTO dto) {
 
@@ -150,7 +150,7 @@ public class WorkOrderController {
     }
 
     @GetMapping("/generate-number")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','PLANNER','ADMIN')")
     public ResponseEntity<Map<String, String>> generateNumber() {
 
         Map<String, String> response = new HashMap<>();
@@ -166,7 +166,7 @@ public class WorkOrderController {
        ====================================================== */
 
     @GetMapping("/planning/calendar")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<List<WorkOrder>> getCalendarPlanLoad(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime start,
@@ -178,14 +178,14 @@ public class WorkOrderController {
     }
 
     @GetMapping("/planning/plan-load-summary")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<Map<String, Long>> getPlanLoadSummary() {
         return ResponseEntity.ok(
                 planningService.getPlanLoadSummary());
     }
 
     @PatchMapping("/planning/{id}/status")
-    @PreAuthorize("hasRole('PLANNER')")
+    @PreAuthorize("hasAnyRole('OPERATIONS PLANNER','TECHNICIAN','OPERATOR','PLANNER','ADMIN')")
     public ResponseEntity<WorkOrder> updatePlanningStatus(
             @PathVariable Long id,
             @RequestParam WorkOrder.WorkOrderStatus status) {
